@@ -1,9 +1,9 @@
 class WordFinder:
     def set_grid(self, grid):
-        # TODO
+        pass
 
     def count(self, word):
-        # TODO
+        pass
 
 if __name__ == "__main__":
     grid = ["TIRATIRA",
