@@ -1,9 +1,21 @@
 class WordFinder:
     def set_grid(self, grid):
-        pass
+        self.grid = []
+        for row in grid:
+            self.grid_complete.append(row)
+        self.height = len(self.grid)
+        self.width = len(self.grid[0])
 
     def count(self, word):
-        pass
+        height, width, length = self.h, self.width, len(word)
+
+        
+        self.directions = [(0,1),(0,-1),(1,0),(-1,0),(1,1),(1,-1),(-1,1),(-1,-1)]
+        
+        beginning = (r,c)
+
+
+
 
 if __name__ == "__main__":
     grid = ["TIRATIRA",
