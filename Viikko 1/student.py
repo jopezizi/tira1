@@ -33,7 +33,7 @@ def check_number(number):
 
 
 if __name__ == "__main__":
-    print(check_number("0")) # False
+    print(check_number("012749138")) # False
     print(check_number("012749139")) # True
     print(check_number("013333337")) # True
     print(check_number("012345678")) # False
