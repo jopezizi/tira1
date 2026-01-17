@@ -16,12 +16,6 @@ def find_segments(data):
     segments.append((segment_length, current))
     return segments
 
-
-
-
-
-
-
 if __name__ == "__main__":
     print(find_segments("aaabbccdddd"))
     # [(3, 'a'), (2, 'b'), (2, 'c'), (4, 'd')]
