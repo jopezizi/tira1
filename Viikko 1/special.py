@@ -4,11 +4,12 @@ def check_year(year):
     for num in year:
         sum += int(num) ** 2
 
-    sum = set(list(str(sum)))
-    if len(sum) == 1:
-        return True
-    else:
-        return False
+    num_1 = str(sum)[0]
+    for num in str(sum):
+        if num != num_1:
+            return False
+    
+    return True
 
 if __name__ == "__main__":
     print(check_year(1995)) # False
