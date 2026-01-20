@@ -1,8 +1,9 @@
 def find_sums(numbers, size):
     i = size
+    groups = len(numbers) + 1 - size
     sums = []
     b = 0
-    while i <= len(numbers):
+    while b < groups:
         sums.append(sum(numbers[b:i]))
         i += 1
         b += 1
