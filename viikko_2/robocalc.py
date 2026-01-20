@@ -1,13 +1,36 @@
 def calculate(input, rules):
+    rules_d = {}
+    for rule in rules:
+        rules_d[(rule[0],rule[1])] = (rule[2],rule[3],rule[4])
+
     input = 'L'+ input + 'R'
+    new_char = 0
+    char = 0
     state = 1
-    b=0
-    for i in range(len(rules)):
-        if rules[i][0]== input[b] and rules[i][1] == state:
-            input = 
+    acceptance = False
+    operations = {"LEFT":-1, "RIGHT":1, "ACCEPT":True, "REJECT": False}
 
+    counter = 0
+    max_counter = 1000
+    while char < len(input):
+        counter += 1
+        if counter > max_counter:
+            break
 
-
+        key = (input[char],state)
+        if key not in rules_d:
+            break
+        
+        operation = rules_d[key][2]
+        if operation == "LEFT" or operation == "RIGHT":
+            new_char = operations[operation]
+        elif operation == "ACCEPT" or operation == "REJECT":
+            acceptance = operations[operation]
+        new_input = input[:char] + rules_d[key][0] + input[char+1:]
+        state = rules_d[key][1]
+        char += new_char
+        input = new_input
+    return acceptance
 
 
 if __name__ == "__main__":
