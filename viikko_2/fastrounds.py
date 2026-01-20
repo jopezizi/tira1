@@ -1,16 +1,9 @@
 def count_rounds(numbers):
     rounds = 0
-    find = 1
-    for num in numbers:
-        if num == find:
-            find += 1
-        else:
+    for i in range(len(numbers) - 1):
+        if numbers[i] > numbers[i + 1]:
             rounds += 1
-            if num == find:
-                find += 1
-    rounds += 1
-    return rounds
-
+    return rounds + 1
 
 if __name__ == "__main__":
     print(count_rounds([1, 2, 3, 4])) # 1
