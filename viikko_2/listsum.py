@@ -1,12 +1,14 @@
 def find_sums(numbers, size):
-    i = size
-    groups = len(numbers) + 1 - size
     sums = []
-    b = 0
-    while b < groups:
-        sums.append(sum(numbers[b:i]))
-        i += 1
-        b += 1
+
+    for i in range(len(numbers)):
+        if i + size > len(numbers):
+            break
+        if len(sums) == 0:
+            sums.append(sum(numbers[i:size]))
+        else:
+            sums.append(sums[i-1]-numbers[i-1]+numbers[i+size-1])
+    
     return sums
 
 if __name__ == "__main__":

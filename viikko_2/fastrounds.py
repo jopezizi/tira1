@@ -9,6 +9,14 @@ def count_rounds(numbers):
     
     return rounds + 1
 
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     print(count_rounds([3,1,2])) # 1
     print(count_rounds([1, 3, 2, 4])) # 2
