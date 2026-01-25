@@ -1,24 +1,15 @@
 def count_rounds(numbers):
-    rounds = 0
-    find = 1
+    model = sorted(numbers)
+    indexes = list(range(len(numbers)+1))
+    similar = 0
 
-    for num in numbers:
-        if num < find:
-            rounds += 1
-        find = max(find, num + 1)
-    
-    return rounds + 1
-
-
-
-
-
-
-
+    for i in range(len(model)):
+        if model[i] == numbers[i]:
+            similar += 1
 
 
 if __name__ == "__main__":
-    print(count_rounds([3,1,2])) # 1
+    print(count_rounds([1,2,3,4])) # 1
     print(count_rounds([1, 3, 2, 4])) # 2
     print(count_rounds([4, 3, 2, 1])) # 4
     print(count_rounds([1])) # 1
