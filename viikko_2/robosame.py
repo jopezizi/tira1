@@ -34,42 +34,82 @@ def calculate(input, rules):
 
 def create_rules():
     rules = []
-    # 1 = alkutila
-    # 2 = eka 0
-    # 3 = eka 1 
-    # 4 = etsi 0
-    # 5 = etsi 1
-    # 6 = palaa alkuun
 
-    rules.append(("L", 1, "L", 1, "RIGHT"))
+    # State 1: etsi vasemmalta ensimmäinen 0 tai 1
+    rules += [
+        ('L', 1, 'L', 1, 'RIGHT'),
+        ('X', 1, 'X', 1, 'RIGHT'),
+        ('0', 1, 'X', 2, 'RIGHT'),  # muista että haetaan 0-pari
+        ('1', 1, 'X', 3, 'RIGHT'),  # muista että haetaan 1-pari
+        ('R', 1, 'R', 6, 'RIGHT'),  # kaikki käsitelty → hyväksyntä
+    ]
 
-    rules.append(("0",1,"A",2, "RIGHT"))
-    rules.append(("1",1,"A",3, "RIGHT"))
+    # State 2: haetaan oikealta vastaava 0
+    rules += [
+        ('0', 2, '0', 2, 'RIGHT'),
+        ('1', 2, '1', 2, 'RIGHT'),
+        ('X', 2, 'X', 2, 'RIGHT'),
+        ('R', 2, 'R', 4, 'LEFT'),
+    ]
 
-    rules.append(("0",3,"0",5, "RIGHT"))
-    rules.append(("1",2,"1",4, "RIGHT"))
+    # State 3: haetaan oikealta vastaava 1
+    rules += [
+        ('0', 3, '0', 3, 'RIGHT'),
+        ('1', 3, '1', 3, 'RIGHT'),
+        ('X', 3, 'X', 3, 'RIGHT'),
+        ('R', 3, 'R', 5, 'LEFT'),
+    ]
 
-    rules.append(("0",4,"B",6, "LEFT"))
-    rules.append(("1",5,"B",6, "LEFT"))
+    # State 4: tarkista löytyykö viimeinen 0
+    rules += [
+        ('X', 4, 'X', 4, 'LEFT'),
+        ('0', 4, 'X', 7, 'LEFT'),   # pari löytyi
+        ('1', 4, '1', 8, 'LEFT'),   # väärä pari → reject
+        ('L', 4, 'L', 8, 'LEFT'),   # ei löytynyt → reject
+    ]
 
-    rules.append(("0",6,"A",2, "RIGHT"))
-    rules.append(("1",6,"A",3, "RIGHT"))
+    # State 5: tarkista löytyykö viimeinen 1
+    rules += [
+        ('X', 5, 'X', 5, 'LEFT'),
+        ('1', 5, 'X', 7, 'LEFT'),   # pari löytyi
+        ('0', 5, '0', 8, 'LEFT'),   # väärä pari → reject
+        ('L', 5, 'L', 8, 'LEFT'),   # ei löytynyt → reject
+    ]
 
-    rules.append(("A",2,"A",4, "RIGHT"))
-    rules.append(("B",2,"B",4, "RIGHT"))
+    # State 7: palaa alkuun uutta kierrosta varten
+    rules += [
+        ('0', 7, '0', 7, 'LEFT'),
+        ('1', 7, '1', 7, 'LEFT'),
+        ('X', 7, 'X', 7, 'LEFT'),
+        ('L', 7, 'L', 1, 'RIGHT'),
+    ]
 
-    rules.append(("A",3,"A",5, "RIGHT"))
-    rules.append(("B",3,"B",5, "RIGHT"))
+    # State 6: ACCEPT
+    rules += [
+        ('R', 6, 'R', 6, 'ACCEPT')
+    ]
 
-    rules.append(("0",5,"0",5, "RIGHT"))
-    rules.append(("1",4,"1",4, "RIGHT"))
-    
-    rules.append(("L",6,"L",6,"ACCEPT"))
+    # State 8: REJECT
+    rules += [
+        ('L', 8, 'L', 8, 'REJECT'),
+        ('0', 8, '0', 8, 'REJECT'),
+        ('1', 8, '1', 8, 'REJECT'),
+        ('X', 8, 'X', 8, 'REJECT'),
+        ('R', 8, 'R', 8, 'REJECT'),
+    ]
 
     return rules
+
+
+
 
 
 if __name__ == "__main__":
     rules = create_rules()
 
-    print(calculate("101101", rules)) # True
+    print(calculate("00", rules)) # True
+    print(calculate("001001", rules)) # True
+    print(calculate("10111011", rules)) # True
+    print(calculate("01", rules)) # False
+    print(calculate("00100", rules)) # False
+    print(calculate("10111101", rules)) # False
