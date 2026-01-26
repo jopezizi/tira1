@@ -1,14 +1,19 @@
 def count_rounds(numbers):
-    model = sorted(numbers)
-    indexes = list(range(len(numbers)+1))
-    similar = 0
+    rounds = 1
 
-    for i in range(len(model)):
-        if model[i] == numbers[i]:
-            similar += 1
+    pos = {}
+    for i, num in enumerate(numbers):
+        pos[num] = i
 
+    for num in range(2, len(numbers)+1):
+        if pos[num] < pos[num-1]:
+            rounds += 1
+    
+    return rounds
 
 if __name__ == "__main__":
+    print(count_rounds([2,5,4,1,3])) # 4
+    print(count_rounds([3,1,2])) # 2
     print(count_rounds([1,2,3,4])) # 1
     print(count_rounds([1, 3, 2, 4])) # 2
     print(count_rounds([4, 3, 2, 1])) # 4
