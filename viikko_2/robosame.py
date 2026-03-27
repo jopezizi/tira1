@@ -35,71 +35,58 @@ def calculate(input, rules):
 def create_rules():
     rules = []
 
-    # State 1: etsi vasemmalta ensimmäinen 0 tai 1
-    rules += [
-        ('L', 1, 'L', 1, 'RIGHT'),
-        ('X', 1, 'X', 1, 'RIGHT'),
-        ('0', 1, 'X', 2, 'RIGHT'),  # muista että haetaan 0-pari
-        ('1', 1, 'X', 3, 'RIGHT'),  # muista että haetaan 1-pari
-        ('R', 1, 'R', 6, 'RIGHT'),  # kaikki käsitelty → hyväksyntä
-    ]
+    rules.append(("L", 1, "L", 2, "RIGHT"))
 
-    # State 2: haetaan oikealta vastaava 0
-    rules += [
-        ('0', 2, '0', 2, 'RIGHT'),
-        ('1', 2, '1', 2, 'RIGHT'),
-        ('X', 2, 'X', 2, 'RIGHT'),
-        ('R', 2, 'R', 4, 'LEFT'),
-    ]
+    rules.append(("0", 2, "A", 3, "RIGHT"))
+    rules.append(("1", 2, "B", 3, "RIGHT"))
 
-    # State 3: haetaan oikealta vastaava 1
-    rules += [
-        ('0', 3, '0', 3, 'RIGHT'),
-        ('1', 3, '1', 3, 'RIGHT'),
-        ('X', 3, 'X', 3, 'RIGHT'),
-        ('R', 3, 'R', 5, 'LEFT'),
-    ]
+    rules.append(("0", 3, "0", 3, "RIGHT"))
+    rules.append(("1", 3, "1", 3, "RIGHT"))
+    rules.append(("C", 3, "C", 4, "LEFT"))
+    rules.append(("D", 3, "D", 4, "LEFT"))
+    rules.append(("R", 3, "R", 4, "LEFT"))
 
-    # State 4: tarkista löytyykö viimeinen 0
-    rules += [
-        ('X', 4, 'X', 4, 'LEFT'),
-        ('0', 4, 'X', 7, 'LEFT'),   # pari löytyi
-        ('1', 4, '1', 8, 'LEFT'),   # väärä pari → reject
-        ('L', 4, 'L', 8, 'LEFT'),   # ei löytynyt → reject
-    ]
+    rules.append(("0", 4, "C", 5, "LEFT"))
+    rules.append(("1", 4, "D", 5, "LEFT"))
+    rules.append(("A", 4, "A", 11, "REJECT"))
+    rules.append(("B", 4, "B", 11, "REJECT"))
 
-    # State 5: tarkista löytyykö viimeinen 1
-    rules += [
-        ('X', 5, 'X', 5, 'LEFT'),
-        ('1', 5, 'X', 7, 'LEFT'),   # pari löytyi
-        ('0', 5, '0', 8, 'LEFT'),   # väärä pari → reject
-        ('L', 5, 'L', 8, 'LEFT'),   # ei löytynyt → reject
-    ]
+    rules.append(("0", 5, "0", 5, "LEFT"))
+    rules.append(("1", 5, "1", 5, "LEFT"))
+    rules.append(("A", 5, "A", 6, "RIGHT"))
+    rules.append(("B", 5, "B", 6, "RIGHT"))
 
-    # State 7: palaa alkuun uutta kierrosta varten
-    rules += [
-        ('0', 7, '0', 7, 'LEFT'),
-        ('1', 7, '1', 7, 'LEFT'),
-        ('X', 7, 'X', 7, 'LEFT'),
-        ('L', 7, 'L', 1, 'RIGHT'),
-    ]
+    rules.append(("0", 6, "A", 3, "RIGHT"))
+    rules.append(("1", 6, "B", 3, "RIGHT"))
+    rules.append(("C", 6, "C", 7, "LEFT"))
+    rules.append(("D", 6, "D", 7, "LEFT"))
 
-    # State 6: ACCEPT
-    rules += [
-        ('R', 6, 'R', 6, 'ACCEPT')
-    ]
+    rules.append(("A", 7, "A", 7, "LEFT"))
+    rules.append(("B", 7, "B", 7, "LEFT"))
+    rules.append(("C", 7, "C", 7, "LEFT"))
+    rules.append(("D", 7, "D", 7, "LEFT"))
+    rules.append(("X", 7, "X", 7, "LEFT"))
+    rules.append(("L", 7, "L", 8, "RIGHT"))
 
-    # State 8: REJECT
-    rules += [
-        ('L', 8, 'L', 8, 'REJECT'),
-        ('0', 8, '0', 8, 'REJECT'),
-        ('1', 8, '1', 8, 'REJECT'),
-        ('X', 8, 'X', 8, 'REJECT'),
-        ('R', 8, 'R', 8, 'REJECT'),
-    ]
+    rules.append(("X", 8, "X", 8, "RIGHT"))
+    rules.append(("A", 8, "X", 9, "RIGHT"))
+    rules.append(("B", 8, "X", 10, "RIGHT"))
+    rules.append(("R", 8, "R", 12, "ACCEPT"))
+
+    rules.append(("A", 9, "A", 9, "RIGHT"))
+    rules.append(("B", 9, "B", 9, "RIGHT"))
+    rules.append(("X", 9, "X", 9, "RIGHT"))
+    rules.append(("C", 9, "X", 7, "LEFT"))
+    rules.append(("D", 9, "D", 11, "REJECT"))
+
+    rules.append(("A", 10, "A", 10, "RIGHT"))
+    rules.append(("B", 10, "B", 10, "RIGHT"))
+    rules.append(("X", 10, "X", 10, "RIGHT"))
+    rules.append(("D", 10, "X", 7, "LEFT"))
+    rules.append(("C", 10, "C", 11, "REJECT"))
 
     return rules
-
+    
 
 
 

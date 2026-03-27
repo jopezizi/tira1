@@ -7,18 +7,26 @@ def hash_value(string):
         total += table.find(char) * 23 ** (len(string)-b)
         b += 1
     
-    return total % 2 ** 32
+    return total % (2 ** 32)
  
 
 def find_other(string):
+    target = hash_value(string)
     table = "abcdefghijklmnopqrstuvwxyz"
-    val = hash_value(string)
-    chars = []
-    chars.append(table[-1])
+    a = 23
+    m = 2**32
 
+    result = ''
+    curr = target
 
-    return "".join(reversed(chars))
+    for i in range(10):
+        result = table[curr % a] + result
+        curr //= a
     
+    if result == string:
+        return result + "a"
+    
+    return result
 
 if __name__ == "__main__":
     string1 = "kissa"

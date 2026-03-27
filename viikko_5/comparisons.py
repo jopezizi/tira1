@@ -18,12 +18,14 @@ class Comparer:
 
 def find_list(comparer: Comparer):
     n = comparer.list_size()
-    indexes = list(range(n))
+    if n == 0:
+        return []
+    if n == 1:
+        return [1]
+    
+    sorted_index = [0]
 
-    def sort(l:list):
-        if len(l) == 1:
-            return l
-        
+    
 
 if __name__ == "__main__":
     comparer = Comparer([3, 1, 2, 4])
