@@ -1,8 +1,22 @@
-def find_first(size, steps):
-    first = 1
+from collections import deque
 
+def find_first(size, steps):
+    q = deque([i for i in range(1,size+1)])
+    
     for i in range(steps):
-        first = 
+        rep1 = q.popleft()
+        rep2 = q.popleft()
+        q.append(rep2)
+        q.append(rep1)
+
+    return q.popleft()
+
+        
+
+
+
+
+
 
 if __name__ == "__main__":
     print(find_first(4, 3)) # 4
